@@ -1,6 +1,6 @@
 # Optimal resizable array
 
-This repo is a demo implementation of [Optimal Resizable Arrays](https://cs.uwaterloo.ca/research/tr/1999/09/CS-99-09.pdf) in Zig.
+This repo is a demo implementation of [Resizable Arrays in Optimal Time and Space](https://cs.uwaterloo.ca/research/tr/1999/09/CS-99-09.pdf) in Zig.
 
 Currently, only the "Singly Resizable Array" data structure is implemented.
 
