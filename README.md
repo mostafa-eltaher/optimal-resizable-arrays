@@ -5,7 +5,7 @@ This repo is a demo implementation of [Resizable Arrays in Optimal Time and Spac
 Currently, only the **Singly Resizable Array** data structure is implemented.
 
 ## Mistake in the `Locate` procedure
-In the **Resizable Arrays in Optimal Time and Space** paper, there is a mistake in the `Locate` procedured (Algorithm 3, step 3, page 8 and the same on Algorithm 6, step 5.a, page 13 )
+In the **Resizable Arrays in Optimal Time and Space** paper, there is a mistake in the `Locate` procedure (Algorithm 3, step 3, page 8 and the same on Algorithm 6, step 5.a, page 13 )
 
 $p$ is the number of data blocks in superblocks prior to $SB_k$.
 
