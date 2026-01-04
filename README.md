@@ -1,11 +1,11 @@
-# Optimal resizable array
+# Optimal Resizable Array
 
 This repo is a demo implementation of [Resizable Arrays in Optimal Time and Space](https://cs.uwaterloo.ca/research/tr/1999/09/CS-99-09.pdf) in Zig.
 
-Currently, only the "Singly Resizable Array" data structure is implemented.
+Currently, only the **Singly Resizable Array** data structure is implemented.
 
 ## Mistake in the `Locate` procedure
-In the "Resizable Arrays in Optimal Time and Space" paper, there is a mistake in the `Locate` procedured (Algorithm 3, step 3, page 8 and the same on Algorithm 6, step 5.a, page 13 )
+In the **Resizable Arrays in Optimal Time and Space** paper, there is a mistake in the `Locate` procedured (Algorithm 3, step 3, page 8 and the same on Algorithm 6, step 5.a, page 13 )
 
 $p$ is the number of data blocks in superblocks prior to $SB_k$.
 
