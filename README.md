@@ -18,6 +18,7 @@ which is drived from:
 $$p = \sum_{j=0}^{k-1} 2^j$$
 
 However, it should be:
+
 $$p = \sum_{j=0}^{k-1} 2^{\lfloor j/2 \rfloor}$$
 
 which can be caculated as:
