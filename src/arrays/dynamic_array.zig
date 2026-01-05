@@ -61,7 +61,7 @@ pub fn DynamicArray(comptime T: type) type {
             if (isLastDataBlockFull) {
                 if (isLastSuperblockFull) {
                     self.s += 1;
-                    // if s-1 is odd (i.e. s is even), double size of the data block, otherwise double the count of the data blocks
+                    // if s-1 is odd (i.e. s is even), double the size of the data block, otherwise double the count of the data blocks
                     if (self.s & 1 == 0) self.s_block_capacity <<= 1 else self.s_block_max_count <<= 1;
                     self.s_block_occupancy = 0; // will be incremented to 1 below.
                 }
@@ -95,7 +95,7 @@ pub fn DynamicArray(comptime T: type) type {
                 const isLastSuperblockEmpty = self.s_block_occupancy == 0;
                 if (isLastSuperblockEmpty and self.s > 1) {
                     self.s -= 1;
-                    // if s-1 is odd (i.e. s is even), half number of the data blocks, otherwise half the size of the data blocks
+                    // if s-1 is odd (i.e. s is even), half the number of the data blocks, otherwise half the size of the data blocks
                     if (self.s & 1 == 0) self.s_block_max_count >>= 1 else self.s_block_capacity >>= 1;
                     self.s_block_occupancy = self.s_block_max_count;
                 }
@@ -107,15 +107,15 @@ pub fn DynamicArray(comptime T: type) type {
             }
         }
 
-        // returns: {index, offset}.
-        // index is the index of the data block in the index block.
-        // offset is the offset within the data block
+        // returns: {index, offset}
+        //   index: is the index of the data block in the index block.
+        //   offset: is the offset within the data block
         // use:
-        // const idx, const offset = self.locate(i);
+        //   const idx, const offset = self.locate(i);
         // Note: There is a mistake in the paper on how to calculate this, in the particular the p value.
         pub fn locate(i: usize) struct { usize, usize } {
             if (i == 0) return .{ 0, 0 };
-            const usize1: usize = 1; // for zig: 1 in usize to be used as LHS of shift
+            const usize1: usize = 1; // for zig compiler: 1 in usize to be used as LHS of shift and have the output in usize
 
             const r = i + 1;
             const r_bit_size: u6 = @intCast(@bitSizeOf(usize) - @clz(r));
@@ -124,13 +124,13 @@ pub fn DynamicArray(comptime T: type) type {
             const k = r_bit_size - 1; // k is the index of super block
             const khf = k >> 1; // convenience: floor(k/2)
             const khc = (k + 1) >> 1; // convenience: ciel(k/2)
-            const two_power_khf = (usize1 << khf); //convenience: $2^{floor(k/2)}
+            const two_power_khf = (usize1 << khf); //convenience: 2^(floor(k/2))
 
             const b = r_after_msb >> khc; // the first floor(k/2) bits of r after the leading 1-bit
             const e_mask = (usize1 << khc) - 1; // the last ciel(k/2) bits, of r after the leading 1-bit, set to 1
             const e = r_after_msb & e_mask; // the last ciel(k/2) bits of r after the leading 1-bit
 
-            // This was mistakenly caculated in the paper as p = 2^k -1
+            // This was mistakenly caculated in the paper as p = (2^k) -1
             // the correct formula should be p = 2(2^(floor(k/2)) - 1) +  (k mod 2)2^(floor(k/2))
             const p = ((two_power_khf - 1) << 1) + (k & 1) * two_power_khf;
             return .{ p + b, e };
@@ -138,6 +138,7 @@ pub fn DynamicArray(comptime T: type) type {
 
         //TODO: consider using enum insead of boolean
         fn resizeIndex(self: *Self, up: bool) !void {
+            // if up is true, double the size, otherwise, half the size
             const new_index_size = if (up) self.index.len << 1 else self.index.len >> 1;
             const new_index = try self.allocator.alloc([]T, new_index_size);
             for (0..self.d) |i| {
